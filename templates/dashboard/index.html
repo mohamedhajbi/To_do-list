@@ -1,0 +1,85 @@
+{% extends 'partials/base.html' %} <br />
+{% block title %}Home{% endblock %} {% block content %}
+
+<div class="container">
+  <br />
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header">Statistic</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h6>Total</h6>
+                  <p class="text-center">{{total_todo}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h6>Completed</h6>
+                  <p class="text-center">{{completed_todo}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <h6>Incompleted</h6>
+                  <p class="text-center">{{uncompleted_todo}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header">ToDo Form</div>
+        <div class="card-body">
+          <form action="/add" method="POST">
+            <label for="">Title</label>
+            <input
+              class="form-control"
+              type="text"
+              name="title"
+              placeholder="Add todo...."
+            />
+            <input
+              class="btn btn-primary mt-2 btn-sm"
+              type="submit"
+              value="Add"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if total_todo == 0 %}
+  <div style="padding: 20px">
+    <marquee class="mt-4 display-4" behavior="scroll" direction="left"
+      >No todo in the list .... Add one ... the form above can help u to add
+      one</marquee
+    >
+  </div>
+  {% endif %} {% for todo in todo_list %}
+  <div class="border-start border-5 mt-4 shadow">
+    <div class="card-body">
+      <h5>{{ todo.id}} | {{todo.title}}</h5>
+      {% if todo.complete %}
+      <span class="badge bg-success">Completed</span>
+      {% else %}
+      <span class="badge bg-danger">Uncompleted</span>
+      {% endif %}
+      <a class="btn btn-info btn-sm" href="/update/{{todo.id}}">Update</a>
+      <a class="btn btn-danger btn-sm" href="/delete/{{todo.id}}">Delete</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
